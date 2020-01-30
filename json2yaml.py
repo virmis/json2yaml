@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
-import sys
-import json
+from collections import OrderedDict
 from functools import reduce
-import operator
 from ruamel.yaml import YAML
 import argparse
+import json
+import operator
+import sys
 
 def getFromDict(dataDict, mapList):
     return reduce(operator.getitem, mapList, dataDict)
@@ -18,6 +19,7 @@ def readJsonFromFile(jsonFile):
     with open(jsonFile) as json_file:
         try:
             data = json.load(json_file)
+            data = OrderedDict(sorted(data.items()))
         except Exception as e:
             print(repr(e))
             sys.exit(1)
